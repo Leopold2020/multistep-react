@@ -2,19 +2,21 @@
 // TODO: importera useLocation från "react-router"
 import type { ReactNode } from "react";
 import ProgressBar from "./ProgressBar";
+import { Outlet, useLocation } from "react-router";
 
 // TODO: använd useLocation och stepMap för att beräkna currentStep dynamiskt
-// const stepMap: Record<string, number> = {
-//   "/": 1,
-//   "/address": 2,
-//   "/preferences": 3,
-//   "/summary": 4,
-// };
+const stepMap: Record<string, number> = {
+  "/form/name": 1,
+  "/form/address": 2,
+  "/form/preferences": 3,
+  "/form/summary": 4,
+};
 
 // TODO: ta bort children-propen och använd <Outlet /> istället
 function FormLayout({ children }: { children?: ReactNode }) {
 
-  const currentStep = 1; // TODO: Ta bort denna hårdkodning  och använd useLocation istället
+  const location = useLocation();
+  const currentStep = stepMap[location.pathname] || 1; // TODO: Ta bort denna hårdkodning  och använd useLocation istället
 
   // TODO: const location = useLocation();
   // TODO: const currentStep = stepMap[location.pathname] || 1;
@@ -26,7 +28,8 @@ function FormLayout({ children }: { children?: ReactNode }) {
           Registrering
         </h1>
         <ProgressBar currentStep={currentStep} totalSteps={4} />
-        {children}
+        {/* {children} */}
+        <Outlet/>
         {/* TODO: ersätt {children} ovan med <Outlet /> */}
       </div>
     </div>
